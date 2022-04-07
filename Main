@@ -1,0 +1,58 @@
+package com.example.testtolerance
+
+import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.provider.SyncStateContract
+import android.telephony.ims.RegistrationManager
+import android.view.View
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import com.example.testtolerance.databinding.ActivityMainBinding
+
+class MainActivity : AppCompatActivity() {
+    lateinit var bindingCla: ActivityMainBinding
+    private var Net: ActivityResultLauncher<Intent>? = null
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        bindingCla = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(bindingCla.root)
+
+        Net = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+            result:ActivityResult ->
+        }
+
+        fun hide_btDa (){
+            bindingCla.btDa.visibility = View.GONE
+        }
+        fun hide_btNo (){
+            bindingCla.btNo.visibility = View.GONE
+        }
+        fun hide_textAnswer (){
+            bindingCla.textAnswer.visibility = View.GONE
+        }
+        fun show_imageOnMain(){
+            bindingCla.imageOnMain.visibility = View.VISIBLE
+        }
+        fun show_Nice(){
+            bindingCla.niceOnMain.visibility = View.VISIBLE
+        }
+
+        bindingCla.btDa.setOnClickListener {
+            hide_btDa()
+            hide_btNo()
+            hide_textAnswer()
+            show_imageOnMain()
+            show_Nice()
+        }
+        bindingCla.btNo.setOnClickListener {
+            val i = Intent(this, MainActivity2::class.java)
+            Net?.launch(i)
+        }
+        bindingCla.niceOnMain.setOnClickListener {
+            val i = Intent(this, MainActivity2::class.java)
+            Net?.launch(i)
+        }
+    }
+}
